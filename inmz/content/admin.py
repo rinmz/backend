@@ -1,9 +1,9 @@
 from django.contrib import admin
 from .models import Content
 
-@admin.register(Content)
 class ContentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'content_type', 'created_at')
-    list_filter = ('content_type', 'created_at')
-    search_fields = ('user__username', 'content')
-    readonly_fields = ('created_at',)
+    readonly_fields = ('created_at',)  # Make sure 'created_at' is defined in the model
+    list_display = ('id', 'user', 'content_type', 'created_at')  # Ensure the field exists
+    list_filter = ('content_type', 'created_at')  # Add fields that exist in the model
+
+admin.site.register(Content, ContentAdmin)

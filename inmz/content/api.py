@@ -44,3 +44,13 @@ def get_content(request, content_id: int):
          "content_type": content.content_type,
          "created_at": content.created_at.isoformat() # isoformat() changes the datetime object to a string
     }
+
+@router.post("/answer")
+def answer_content(request, content_id: int, answer_type: str):
+    try:
+        content = Content.objects.get(id=content_id)
+        content.answer_type = answer_type
+        content.save()
+        return {"message": f"Answer type set to {answer_type}"}
+    except Content.DoesNotExist:
+        return {"error": "content not found"}
